@@ -10,8 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
@@ -19,3 +18,4 @@ jobs:
           app-name: tutor-web-app123
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           package: .
+          clean: true
