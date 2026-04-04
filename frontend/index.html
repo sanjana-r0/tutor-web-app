@@ -11,10 +11,279 @@
 
 <body>
 
-<!-- KEEP ALL YOUR HTML BODY EXACTLY SAME -->
-<!-- (DO NOT CHANGE ANYTHING INSIDE BODY) -->
 
-<!-- 👇 ADD THIS AT VERY BOTTOM -->
+<!-- ══════════════════════════════════════════
+     LOGIN SCREEN
+══════════════════════════════════════════ -->
+<div id="loginScreen" class="screen active">
+  <div class="login-box">
+    <div class="login-hero">
+      <div class="login-logo">Tutor<span>Match</span></div>
+      <div class="login-tagline">Discover verified tutors. Book in seconds.<br>Teach what you know. Earn what you deserve.</div>
+    </div>
+    <div class="login-body">
+      <div class="role-tabs" id="roleTabs">
+        <button class="role-tab on" onclick="setRole('student',this)">🎓 Student</button>
+        <button class="role-tab"   onclick="setRole('tutor',this)">📚 Tutor</button>
+        <button class="role-tab"   onclick="setRole('admin',this)">🛡 Admin</button>
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input id="lEmail" type="email" placeholder="your@email.com" autocomplete="email">
+       
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input id="lPass" type="password" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <button class="btn-main" onclick="doLogin()">Sign In →</button>
+      <div class="login-demo" id="loginDemo">
+        Student: <code>student@demo.com</code> / <code>pass123</code>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     STUDENT SCREEN
+══════════════════════════════════════════ -->
+<div id="studentScreen" class="screen">
+  <div class="app-shell">
+    <div class="topbar">
+      <div class="topbar-logo">Tutor<span>Match</span></div>
+      <span class="topbar-role">Student</span>
+      <div class="topbar-right">
+        <span class="topbar-user" id="stu-username"></span>
+        <button class="btn-logout" onclick="doLogout()">Sign out</button>
+      </div>
+    </div>
+    <div class="app-body">
+      <div class="sidebar">
+        <button class="nav-btn on" onclick="stuTab('browse',this)"><span class="ni">🔍</span> Browse Tutors</button>
+        <button class="nav-btn"   onclick="stuTab('bookings',this)"><span class="ni">📅</span> My Bookings</button>
+        <button class="nav-btn"   onclick="stuTab('sprofile',this)"><span class="ni">👤</span> Profile</button>
+      </div>
+      <div class="content">
+
+        <!-- Browse -->
+        <div class="tab-pane on" id="stu-browse">
+          <div class="ph">
+            <h1>Find a Tutor</h1>
+            <p>All tutors are verified by our admin team before appearing here.</p>
+          </div>
+          <div class="stats" id="stu-stats"></div>
+          <div class="tutor-grid" id="tutorGrid"></div>
+        </div>
+
+        <!-- My Bookings -->
+        <div class="tab-pane" id="stu-bookings">
+          <div class="ph"><h1>My Bookings</h1><p>Track all your scheduled sessions.</p></div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Tutor</th><th>Subject</th><th>Date</th><th>Time</th><th>Notes</th><th>Status</th><th></th></tr></thead>
+              <tbody id="stuBookTbl"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Profile -->
+        <div class="tab-pane" id="stu-sprofile">
+          <div class="ph"><h1>My Profile</h1></div>
+          <div class="profile-card">
+            <div class="profile-top">
+              <div class="profile-ava" id="stu-pava"></div>
+              <div><div class="profile-name" id="stu-pname"></div><div class="profile-role">Student Account</div></div>
+            </div>
+            <div class="two-col">
+              <div class="field"><label>Full Name</label><input id="stu-p-name" placeholder="Your name"></div>
+              <div class="field"><label>Email</label><input id="stu-p-email" disabled></div>
+            </div>
+            <button class="btn-save" onclick="saveStuProfile()">Save Changes</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TUTOR SCREEN
+══════════════════════════════════════════ -->
+<div id="tutorScreen" class="screen">
+  <div class="app-shell">
+    <div class="topbar">
+      <div class="topbar-logo">Tutor<span>Match</span></div>
+      <span class="topbar-role">Tutor</span>
+      <div class="topbar-right">
+        <span class="topbar-user" id="tut-username"></span>
+        <button class="btn-logout" onclick="doLogout()">Sign out</button>
+      </div>
+    </div>
+    <div class="app-body">
+      <div class="sidebar">
+        <button class="nav-btn on" onclick="tutTab('tdash',this)"><span class="ni">📊</span> Dashboard</button>
+        <button class="nav-btn"   onclick="tutTab('tprofile',this)"><span class="ni">👤</span> My Profile</button>
+        <button class="nav-btn"   onclick="tutTab('tsessions',this)"><span class="ni">📅</span> Sessions</button>
+      </div>
+      <div class="content">
+
+        <!-- Dashboard -->
+        <div class="tab-pane on" id="tut-tdash">
+          <div class="ph"><h1 id="tut-welcome"></h1><p>Here's your session overview.</p></div>
+          <div id="tut-banner"></div>
+          <div class="stats" id="tut-stats"></div>
+          <div class="ph" style="margin-bottom:16px;"><h1 style="font-size:20px">Upcoming Sessions</h1></div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Student</th><th>Date</th><th>Time</th><th>Notes</th><th>Status</th></tr></thead>
+              <tbody id="tutDashTbl"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Profile -->
+        <div class="tab-pane" id="tut-tprofile">
+          <div class="ph"><h1>Tutor Profile</h1><p>Complete all fields and submit for admin verification.</p></div>
+          <div class="profile-card" style="max-width:700px">
+            <div class="profile-top">
+              <div class="profile-ava" id="tut-pava"></div>
+              <div>
+                <div class="profile-name" id="tut-pname"></div>
+                <div style="margin-top:6px" id="tut-pbadge"></div>
+              </div>
+            </div>
+            <div class="two-col">
+              <div class="field"><label>Full Name</label><input id="tp-name" placeholder="Dr. Jane Smith"></div>
+              <div class="field"><label>Subject / Expertise</label><input id="tp-subject" placeholder="e.g. Mathematics, Physics"></div>
+            </div>
+            <div class="two-col">
+              <div class="field"><label>Hourly Rate (₹)</label><input id="tp-rate" type="number" placeholder="600"></div>
+              <div class="field"><label>Experience (years)</label><input id="tp-exp" type="number" placeholder="4"></div>
+            </div>
+            <div class="field"><label>Qualifications</label><input id="tp-qual" placeholder="e.g. M.Sc Mathematics, B.Ed"></div>
+            <div class="field">
+              <label>Bio (tell students about yourself)</label>
+              <textarea id="tp-bio" rows="3" placeholder="Describe your teaching approach, background, achievements…"></textarea>
+            </div>
+            <div class="field">
+              <label>Available Time Slots</label>
+              <div class="slot-grid" id="slotGrid"></div>
+            </div>
+            <button class="btn-save" onclick="saveTutorProfile()">Save & Submit for Review</button>
+          </div>
+        </div>
+
+        <!-- Sessions -->
+        <div class="tab-pane" id="tut-tsessions">
+          <div class="ph"><h1>All Sessions</h1></div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Student</th><th>Subject</th><th>Date</th><th>Time</th><th>Notes</th><th>Status</th></tr></thead>
+              <tbody id="tutAllTbl"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     ADMIN SCREEN
+══════════════════════════════════════════ -->
+<div id="adminScreen" class="screen">
+  <div class="app-shell">
+    <div class="topbar">
+      <div class="topbar-logo">Tutor<span>Match</span></div>
+      <span class="topbar-role" style="background:rgba(245,158,11,.1);color:var(--amber);border-color:rgba(245,158,11,.25)">Admin</span>
+      <div class="topbar-right">
+        <button class="btn-logout" onclick="doLogout()">Sign out</button>
+      </div>
+    </div>
+    <div class="app-body">
+      <div class="sidebar">
+        <button class="nav-btn on" onclick="admTab('aqueue',this)"><span class="ni">✅</span> Validation Queue</button>
+        <button class="nav-btn"   onclick="admTab('atutors',this)"><span class="ni">👥</span> All Tutors</button>
+        <button class="nav-btn"   onclick="admTab('abookings',this)"><span class="ni">📋</span> All Bookings</button>
+      </div>
+      <div class="content">
+
+        <!-- Queue -->
+        <div class="tab-pane on" id="adm-aqueue">
+          <div class="ph"><h1>Validation Queue</h1><p>Review and approve tutor applications before they appear to students.</p></div>
+          <div id="queueList"></div>
+        </div>
+
+        <!-- Tutors -->
+        <div class="tab-pane" id="adm-atutors">
+          <div class="ph"><h1>All Tutors</h1></div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Name</th><th>Subject</th><th>Rate</th><th>Exp</th><th>Status</th><th>Bookings</th></tr></thead>
+              <tbody id="admTutTbl"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Bookings -->
+        <div class="tab-pane" id="adm-abookings">
+          <div class="ph"><h1>All Bookings</h1></div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Student</th><th>Tutor</th><th>Subject</th><th>Date</th><th>Time</th><th>Status</th></tr></thead>
+              <tbody id="admBookTbl"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     BOOKING MODAL
+══════════════════════════════════════════ -->
+<div class="overlay" id="bookModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">Book a Session</div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-tutor-strip">
+        <div class="ava" id="m-ava" style="width:42px;height:42px;font-size:15px;"></div>
+        <div class="modal-tutor-info">
+          <div class="name" id="m-name"></div>
+          <div class="sub"  id="m-sub"></div>
+        </div>
+        <div class="modal-rate">
+          <div class="amt" id="m-rate"></div>
+          <div class="lbl">per hour</div>
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="field">
+          <label>Date</label>
+          <input id="bk-date" type="date">
+        </div>
+        <div class="field">
+          <label>Time Slot</label>
+          <select id="bk-time"><option value="">Select slot…</option></select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Topic / Notes</label>
+        <textarea id="bk-notes" rows="3" placeholder="What would you like to cover?"></textarea>
+      </div>
+      <button class="btn-main" onclick="confirmBook()">Confirm Booking →</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
 <script type="module" src="js/app.js"></script>
 
 </body>
