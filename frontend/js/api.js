@@ -1,4 +1,4 @@
-const API_BASE = "https://tutor-function-app123-haffbcbyasdpfgcq.centralindia-01.azurewebsites.net/api";
+const API_BASE = "/api";
 
 /* ───────── LOGIN ───────── */
 export async function loginUser(email, password) {
