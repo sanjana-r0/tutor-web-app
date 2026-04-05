@@ -1,4 +1,4 @@
-const BASE_URL = "https://tutor-function-app123-haffbcbyasdpfgcq.centralindia-01.azurewebsites.net/api";
+const BASE_URL = "https://tutor-backend-function-bgdsayaxgmcjgth4.centralindia-01.azurewebsites.net/api";
 
 
 /* ───────── LOGIN ───────── */
