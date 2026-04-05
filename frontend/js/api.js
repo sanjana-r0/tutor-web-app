@@ -1,15 +1,12 @@
-const API_BASE = "/api";
+const BASE_URL = "https://tutor-function-app123-haffbcbyasdpfgcq.centralindia-01.azurewebsites.net/api";
+
 
 /* ───────── LOGIN ───────── */
 export async function loginUser(email, password) {
   try {
-    const res = await fetch(`${API_BASE}/Login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ email, password })
-    });
+    const res = await fetch(
+      `${BASE_URL}/Login?email=${email}&password=${password}`
+    );
 
     if (!res.ok) throw new Error("Login failed");
 
@@ -23,7 +20,7 @@ export async function loginUser(email, password) {
 /* ───────── GET TUTORS ───────── */
 export async function getTutors() {
   try {
-    const res = await fetch(`${API_BASE}/GetTutors`);
+    const res = await fetch(`${BASE_URL}/GetTutors`);
 
     if (!res.ok) throw new Error("Failed to fetch tutors");
 
@@ -37,7 +34,7 @@ export async function getTutors() {
 /* ───────── GET BOOKINGS ───────── */
 export async function getBookings(email) {
   try {
-    const res = await fetch(`${API_BASE}/GetBookings?email=${email}`);
+    const res = await fetch(`${BASE_URL}/GetBookings?email=${email}`);
 
     if (!res.ok) throw new Error("Failed to fetch bookings");
 
@@ -51,7 +48,7 @@ export async function getBookings(email) {
 /* ───────── CREATE BOOKING ───────── */
 export async function createBooking(data) {
   try {
-    const res = await fetch(`${API_BASE}/CreateBooking`, {
+    const res = await fetch(`${BASE_URL}/CreateBooking`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
